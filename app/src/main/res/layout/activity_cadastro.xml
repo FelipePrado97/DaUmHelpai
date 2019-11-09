@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundoapp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".Cadastro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imvFoto"
+                android:layout_width="106dp"
+                android:layout_height="109dp"
+                android:layout_marginBottom="20dp"
+                app:srcCompat="@drawable/photoicon160"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="42dp" />
+
+            <Button
+                android:id="@+id/btnFoto"
+                android:layout_width="106dp"
+                android:layout_height="31dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_buttom_rounded"
+                android:onClick="tirarFoto"
+                android:text="Tirar Foto"
+                android:textColor="@android:color/white"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="167dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="E-mail"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="82dp" />
+
+            <EditText
+                android:id="@+id/edtNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Nome"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="42dp" />
+
+            <EditText
+                android:id="@+id/edtSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="122dp" />
+
+            <EditText
+                android:id="@+id/edtConfSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Comfirmação de Senha"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="162dp" />
+
+            <EditText
+                android:id="@+id/edtCelular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Telefone: (xx)x xxxx-xxxx"
+                android:paddingLeft="10dp"
+                android:inputType="phone"
+                tools:layout_editor_absoluteX="80dp"
+                tools:layout_editor_absoluteY="251dp" />
+
+            <Button
+                android:id="@+id/btnCadastrar"
+                android:layout_width="209dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_buttom_rounded"
+                android:onClick="cadastrar"
+                android:text="Cadastrar"
+                android:textColor="@android:color/white"
+                tools:layout_editor_absoluteX="143dp"
+                tools:layout_editor_absoluteY="202dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

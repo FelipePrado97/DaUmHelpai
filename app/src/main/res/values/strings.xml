@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Da Um Help aí</string>
+    <string name="title_activity_principal">Principal</string>
+    <string name="title_home">Pedidos</string>
+    <string name="title_dashboard">Configurações</string>
+    <string name="title_notifications">Meus Pedidos</string>
+</resources>
