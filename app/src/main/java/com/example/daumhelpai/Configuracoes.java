@@ -133,11 +133,12 @@ public class Configuracoes extends AppCompatActivity {
             }
                 lstPedidos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                    public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
                         PopupMenu popup = new PopupMenu(Configuracoes.this, view);
                         MenuInflater inflater = popup.getMenuInflater();
                         inflater.inflate(R.menu.poopup_menu, popup.getMenu());
                         popup.show();
+                        final int pos = position;
 
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
@@ -146,7 +147,7 @@ public class Configuracoes extends AppCompatActivity {
                                 if (i.equals("Editar Pedido")){
                                     Intent intent = new Intent(Configuracoes.this, EditarPedido.class);
                                     Bundle parametros = new Bundle();
-                                    int pos = position;
+
                                     parametros.putIntArray("vetor_id",vetor_id);
                                     parametros.putInt("pos",pos);
                                     //String pos = Integer.toString(position);
@@ -155,6 +156,9 @@ public class Configuracoes extends AppCompatActivity {
                                     //Toast.makeText(Configuracoes.this,pos,Toast.LENGTH_SHORT).show();
                                 }else {
                                     //remover pedido
+                                    int id = vetor_id[pos];
+                                    helper.removerPedido(id);
+                                    meuspedidos(view);
 
 
                                 }

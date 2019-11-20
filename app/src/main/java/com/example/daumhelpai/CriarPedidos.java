@@ -117,6 +117,14 @@ public class CriarPedidos extends AppCompatActivity {
             edtPagamento.setText("");
             edtPagOutros.setText("");
 
+            Intent intent = new Intent(CriarPedidos.this, Principal.class);
+            Bundle parametros = new Bundle();
+
+            parametros.putString("email_do_usuario", email);
+
+            intent.putExtras(parametros);
+            startActivity(intent);
+
         }else{
             Toast.makeText(CriarPedidos.this,"Todos os Campos Devem ser Preenchidos!",Toast.LENGTH_LONG).show();
         }

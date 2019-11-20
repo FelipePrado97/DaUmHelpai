@@ -275,7 +275,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor listarPedidosBD() {
         db = this.getReadableDatabase();
-        String selectquery = "SELECT * FROM pedidos";
+        String selectquery = "SELECT id_pedidos, titulo, descricao, fotopedido, pagamento, tipo  FROM pedidos";
         Cursor cursor = db.rawQuery(selectquery, null);
         if (cursor.getCount()>0){
             return cursor;
@@ -401,5 +401,50 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(TABELA2,values,where,null);
 
 
+    }
+
+    public Cursor listarpedidosAceitos(int id_usuario) {
+        db = this.getReadableDatabase();
+        String selectquery = "SELECT pedidoaceito FROM checagempedidos WHERE idusercheck = ?";
+        Cursor cursor = db.rawQuery(selectquery, new String[]{String.valueOf(id_usuario)});
+        if (cursor.getCount()>0){
+            return cursor;
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    public Cursor buscaDadosdoPedido(int id_pedido_aceito) {
+
+        db = this.getReadableDatabase();
+        String selectquery = "SELECT emailhelp, titulo, pagamento FROM pedidos WHERE id_pedidos = ?";
+        Cursor cursor = db.rawQuery(selectquery, new String[]{String.valueOf(id_pedido_aceito)});
+        if (cursor.getCount()>0){
+            return cursor;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public String buscarCelular(String email_criador_pedido) {
+        db = this.getReadableDatabase();
+        String selectquery = "SELECT celular FROM usuarios WHERE mail = ?";
+        Cursor cursor = db.rawQuery(selectquery, new String[]{String.valueOf(email_criador_pedido)});
+        if (cursor.getCount()>0){
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public void removerPedido(int id) {
+        String where = ID_PEDIDOS + "=" + id;
+        db = this.getReadableDatabase();
+        db.delete(TABELA2,where,null);
     }
 }
