@@ -10,8 +10,14 @@
     <ListView
         android:id="@+id/lstMensagens"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="350dp">
 
     </ListView>
+
+    <ListView
+        android:id="@+id/lstPedidos"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>

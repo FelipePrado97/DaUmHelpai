@@ -1,315 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".EditarPerfil">
 
-    <EditText
-        android:id="@+id/edtNome"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginRight="59dp"
-        android:background="@drawable/bg_edittext_rounded"
-        android:ems="10"
-        android:hint="Nome"
-        android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imvFoto"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnCadastrar"
-        android:layout_width="209dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="492dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
-        android:background="@drawable/bg_buttom_rounded"
-        android:onClick="alterar"
-        android:text="Alterar"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtConfSenha" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="abrirConfiguracoes"
+            app:srcCompat="@drawable/gear"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="28dp" />
 
-    <EditText
-        android:id="@+id/edtSenha"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_toStartOf="@+id/imvMensagens"
+            android:layout_toLeftOf="@+id/imvMensagens"
+            android:layout_toEndOf="@+id/imageView2"
+            android:layout_toRightOf="@+id/imageView2"
+            android:onClick="abrirPrincipal"
+            app:srcCompat="@drawable/search"
+            tools:layout_editor_absoluteX="172dp"
+            tools:layout_editor_absoluteY="28dp" />
+
+        <ImageView
+            android:id="@+id/imvMensagens"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="abrirMensagens"
+            app:srcCompat="@drawable/message"
+            tools:layout_editor_absoluteX="323dp"
+            tools:layout_editor_absoluteY="28dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginRight="59dp"
-        android:background="@drawable/bg_edittext_rounded"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imvFoto"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginRight="59dp"
-        android:background="@drawable/bg_edittext_rounded"
-        android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imvFoto"
-        app:layout_constraintTop_toBottomOf="@+id/edtNome" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtConfSenha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="59dp"
-        android:layout_marginRight="59dp"
-        android:background="@drawable/bg_edittext_rounded"
-        android:ems="10"
-        android:hint="Comfirmação de Senha"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnFoto"
-        app:layout_constraintTop_toBottomOf="@+id/edtSenha" />
+            <ImageView
+                android:id="@+id/imvFoto"
+                android:layout_width="106dp"
+                android:layout_height="109dp"
+                android:layout_marginBottom="15dp"
+                app:srcCompat="@drawable/photoicon160"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="42dp" />
 
-    <Button
-        android:id="@+id/btnFoto"
-        android:layout_width="106dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_buttom_rounded"
-        android:onClick="tirarFoto"
-        android:text="Tirar Foto"
-        android:textColor="@android:color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imvFoto" />
+            <Button
+                android:id="@+id/btnFoto"
+                android:layout_width="106dp"
+                android:layout_height="31dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_buttom_rounded"
+                android:onClick="tirarFoto"
+                android:text="Tirar Foto"
+                android:textColor="@android:color/white"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="167dp" />
 
-    <ImageView
-        android:id="@+id/imvFoto"
-        android:layout_width="106dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="42dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/photoicon160" />
+        </LinearLayout>
 
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginBottom="13dp"
-        android:text="Feminino"
-        app:layout_constraintBottom_toTopOf="@+id/editText4"
-        app:layout_constraintStart_toEndOf="@+id/radioButton" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="DD / MM / AAAA"
-        android:inputType="date"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton2"
-        app:layout_constraintStart_toStartOf="@+id/radioButton2" />
+            <EditText
+                android:id="@+id/edtNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Nome"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="42dp" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:text="Telefone:"
-        app:layout_constraintEnd_toStartOf="@+id/editText6"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+            <EditText
+                android:id="@+id/edtSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="122dp" />
 
-    <EditText
-        android:id="@+id/editText6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
-        app:layout_constraintStart_toStartOf="@+id/editText4" />
+            <EditText
+                android:id="@+id/edtConfSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Comfirmação de Senha"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="162dp" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="35dp"
-        android:text="Data de Nascimento:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            <EditText
+                android:id="@+id/edtNascimento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Data de Nascimento:"
+                android:inputType="date"
+                tools:layout_editor_absoluteX="154dp"
+                tools:layout_editor_absoluteY="262dp" />
 
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginBottom="13dp"
-        android:text="Masculino"
-        app:layout_constraintBottom_toTopOf="@+id/editText4"
-        app:layout_constraintStart_toEndOf="@+id/btnFoto" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="24dp"
-        android:text="Sexo:"
-        app:layout_constraintStart_toStartOf="@+id/btnFoto"
-        app:layout_constraintTop_toBottomOf="@+id/btnFoto" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="10dp"
-        android:text="Endereço"
-        app:layout_constraintStart_toStartOf="@+id/editText6"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editText13"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginRight="27dp"
-        android:ems="10"
-        android:hint="Estado:"
-        android:inputType="textPersonName"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText12"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText12" />
+        <RadioGroup
+            android:id="@+id/rdgSexo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editText9"
-        android:layout_width="122dp"
-        android:layout_height="47dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:ems="10"
-        android:hint="Complemento"
-        android:inputType="textPersonName"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText11"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <RadioButton
+                android:id="@+id/rdbMasc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:checked="true"
+                android:text="Masculino"
+                tools:layout_editor_absoluteX="139dp"
+                tools:layout_editor_absoluteY="217dp" />
 
-    <EditText
-        android:id="@+id/editText11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="148dp"
-        android:layout_marginBottom="145dp"
-        android:ems="10"
-        android:hint="Bairro:"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            <RadioButton
+                android:id="@+id/rdbFem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:text="Feminino"
+                tools:layout_editor_absoluteX="261dp"
+                tools:layout_editor_absoluteY="217dp" />
+        </RadioGroup>
 
-    <EditText
-        android:id="@+id/editText8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:ems="10"
-        android:hint="Rua:"
-        android:inputType="textPersonName"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText10"
-        app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:layout_marginRight="52dp"
-        android:text="Esqueci meu CEP"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText7"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <EditText
+                android:id="@+id/edtCEP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_rounded"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:ems="10"
+                android:hint="CEP:"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="20dp"
+                tools:layout_editor_absoluteY="412dp" />
 
-    <EditText
-        android:id="@+id/editText12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Cidade:"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText11" />
+            <TextView
+                android:id="@+id/txtEsqueciMeuCep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:onClick="esquecimeucep"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_marginBottom="15dp"
+                android:text="Esqueceu seu CEP?"
+                tools:layout_editor_absoluteX="249dp"
+                tools:layout_editor_absoluteY="426dp" />
 
-    <EditText
-        android:id="@+id/editText10"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="65dp"
-        android:ems="10"
-        android:hint="Número:"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/editText9"
-        app:layout_constraintEnd_toEndOf="@+id/radioButton2"
-        app:layout_constraintStart_toEndOf="@+id/editText8"
-        app:layout_constraintTop_toTopOf="@+id/editText7" />
+        </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="CEP:"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtCidade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_rounded"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:ems="10"
+                android:hint="Cidade:"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="20dp"
+                tools:layout_editor_absoluteY="607dp" />
+
+            <EditText
+                android:id="@+id/edtEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Estado:"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="248dp"
+                tools:layout_editor_absoluteY="607dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtBairro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:ems="10"
+                android:hint="Bairro:"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="20dp"
+                tools:layout_editor_absoluteY="543dp" />
+
+            <EditText
+                android:id="@+id/edtRua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:ems="10"
+                android:hint="Logradouro:"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="20dp"
+                tools:layout_editor_absoluteY="482dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtNumero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:layout_marginBottom="15dp"
+                android:ems="10"
+                android:hint="Número:"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="250dp"
+                tools:layout_editor_absoluteY="482dp" />
+
+            <EditText
+                android:id="@+id/edtComplemento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edittext_rounded"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="15dp"
+                android:ems="10"
+                android:hint="Complemento:"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="250dp"
+                tools:layout_editor_absoluteY="542dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAlterarCadastro"
+            android:layout_width="209dp"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_buttom_rounded"
+            android:onClick="alterarCadastro"
+            android:text="Alterar"
+            android:textColor="@android:color/white"
+            tools:layout_editor_absoluteX="146dp"
+            tools:layout_editor_absoluteY="678dp" />
+
+    </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

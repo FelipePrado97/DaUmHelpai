@@ -37,11 +37,12 @@
                 android:layout_height="31dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_buttom_rounded"
-                android:onClick="tirarFoto"
-                android:text="Tirar Foto"
+                android:onClick="imagem"
+                android:text="Foto"
                 android:textColor="@android:color/white"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="167dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +117,7 @@
                 tools:layout_editor_absoluteY="251dp" />
 
             <Button
-                android:id="@+id/btnCadastrar"
+                android:id="@+id/btnAlterarCadastro"
                 android:layout_width="209dp"
                 android:layout_height="35dp"
                 android:layout_marginBottom="20dp"

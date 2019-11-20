@@ -4,13 +4,16 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -22,6 +25,7 @@ import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Random;
 
 
@@ -33,8 +37,11 @@ public class Cadastro extends AppCompatActivity {
     public Button btnCadastrar, btnFoto;
     public ImageView imvFoto;
     public byte[] bArray;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+    private final int GALERIA_IMAGENS = 1;
+    public AlertDialog dialog;
     public Bundle parametros;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,7 @@ public class Cadastro extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtSenha = findViewById(R.id.edtSenha);
         edtConfSenha = findViewById(R.id.edtConfSenha);
-        btnCadastrar = findViewById(R.id.btnCadastrar);
+        btnCadastrar = findViewById(R.id.btnAlterarCadastro);
         btnFoto = findViewById(R.id.btnFoto);
         imvFoto = findViewById(R.id.imvFoto);
         edtCelular = findViewById(R.id.edtCelular);
@@ -80,31 +87,30 @@ public class Cadastro extends AppCompatActivity {
 
 
         int OP = helper.buscarUsuario(strEmail,strSenha);
+        int OP2 = helper.buscaTelefone(strCelular);
         if (strSenha.equals(strConfSenha)){
             if ((strNome.isEmpty() || strEmail.isEmpty() || strSenha.isEmpty() ||strConfSenha.isEmpty() || strCelular.isEmpty()) == false){
 
                 if (OP == 1){
-                    Toast toast = Toast.makeText(Cadastro.this,"Usuário já Cadastrado", Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(Cadastro.this,"Usuário já Cadastrado", Toast.LENGTH_SHORT).show();
                 }else {
-
-                    int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
-                    if (permissionCheck == PackageManager.PERMISSION_GRANTED){
-                        MyMessage();
-                    }else{
-                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},0);
+                    if (OP2 == 0){
+                        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
+                        if (permissionCheck == PackageManager.PERMISSION_GRANTED){
+                            MyMessage();
+                        }else{
+                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},0);
+                        }
+                    }else{Toast.makeText(Cadastro.this,"Celular já Cadastrado", Toast.LENGTH_SHORT).show();
                     }
+
                 }
-
-
             }else{
-                Toast toast = Toast.makeText(Cadastro.this,"Todos os Campos São Obrigatórios", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+                Toast.makeText(Cadastro.this,"Todos os Campos São Obrigatórios", Toast.LENGTH_SHORT).show();
 
+            }
         }else {
-            Toast toast = Toast.makeText(Cadastro.this,"senha diferente de confirmação de senha", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(Cadastro.this,"senha diferente de confirmação de senha", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -157,14 +163,39 @@ public class Cadastro extends AppCompatActivity {
         AlertDialog dialog = mBuilder.create();
         dialog.show();
     }
+    public void imagem(View view){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(Cadastro.this);
+        View mView = getLayoutInflater().inflate(R.layout.galeria_foto, null);
 
+        LinearLayout lFoto = mView.findViewById(R.id.linearFoto);
+        LinearLayout lGaleria = mView.findViewById(R.id.linearGaleria);
 
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+        dialog.show();
 
-    public void tirarFoto(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+        lFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+                dialog.dismiss();
+
+            }
+        });
+
+        lGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, GALERIA_IMAGENS);
+                dialog.dismiss();
+            }
+        });
+
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -176,6 +207,22 @@ public class Cadastro extends AppCompatActivity {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
             bArray = bos.toByteArray();
+        }
+        if (requestCode == GALERIA_IMAGENS) {
+            if (data != null) {
+                Uri contentURI = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                    // Salvando a imagem
+                    imvFoto.setImageBitmap(bitmap);
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                    bArray = bos.toByteArray();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Cadastro.this, "Failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 

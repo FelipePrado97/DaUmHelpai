@@ -4,14 +4,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,18 +19,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class CriarPedidos extends AppCompatActivity {
-
-
+public class EditarPedido extends AppCompatActivity {
     DataBaseHelper helper = new DataBaseHelper(this);
-
-
+    public Bundle parametros;
+    public String email;
     public ToggleButton tglTipo;
     public EditText edtTitulo, edtDesc, edtPagamento, edtPagOutros;
     public ImageView imvFoto, imvConfirmarHelp;
@@ -41,13 +35,14 @@ public class CriarPedidos extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 2;
     private final int GALERIA_IMAGENS = 1;
     public AlertDialog dialog;
-    public Bundle parametros;
+    public int idd;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_criar_pedidos);
+        setContentView(R.layout.activity_editar_pedido);
         tglTipo = findViewById(R.id.tglTipo);
         edtPagOutros = findViewById(R.id.edtPagOutros);
         edtTitulo = findViewById(R.id.edtTítulo);
@@ -59,76 +54,51 @@ public class CriarPedidos extends AppCompatActivity {
         rdbOutro = findViewById(R.id.rdbOutro);
         rdbDinheiro = findViewById(R.id.rdbDinheiro);
 
+        Bitmap bm;
+
         Intent intentrecebedora = getIntent();
         parametros = intentrecebedora.getExtras();
 
+        int vetor_id[] = parametros.getIntArray("vetor_id");
 
-        rdbOutro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edtPagamento.setEnabled(false);
-                edtPagamento.setBackgroundColor(Color.GRAY);
-                edtPagOutros.setEnabled(true);
-                edtPagOutros.setVisibility(View.VISIBLE);
+        int id_pedido = parametros.getInt("pos");
+        idd = vetor_id[id_pedido];
+
+
+        Cursor cursor = helper.listarPedidoParaAlterar(idd);
+
+        if (cursor!=null){
+            //Toast.makeText(EditarPedido.this,"cursor tem dados",Toast.LENGTH_LONG).show();
+            while (cursor.moveToNext()){
+                edtTitulo.setText(cursor.getString(0));
+                edtDesc.setText(cursor.getString(1));
+                bArray = cursor.getBlob(2);
+                bm = BitmapFactory.decodeByteArray(bArray,0,bArray.length);
+                imvFoto.setImageBitmap(bm);
+                if (cursor.getInt(4) == 1){
+                    tglTipo.setChecked(true);
+                }
+                email = cursor.getString(5);
+                String pagamento = cursor.getString(3);
+
+                if (pagamento.contains("Pagamento: ")){
+                    rdbOutro.setChecked(true);
+                    edtPagOutros.setText(cursor.getString(3));
+                }else{
+                    rdbDinheiro.setChecked(true);
+                    edtPagamento.setText(cursor.getString(3));
+                }
+
             }
-        });
-        rdbDinheiro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edtPagamento.setEnabled(true);
-                edtPagamento.setBackgroundColor(Color.WHITE);
-                edtPagOutros.setEnabled(false);
-                edtPagOutros.setVisibility(View.INVISIBLE);
-            }
-        });
-
-
-    }
-
-
-
-    public void cadastrarHelp(View view) {
-        String email = parametros.getString("email_do_usuario");
-
-        String strTitulo = edtTitulo.getText().toString();
-        String strDesc = edtDesc.getText().toString();
-        String strPagamento;
-        Boolean  tipo = tglTipo.isChecked();
-
-
-
-        if (rdbDinheiro.isChecked()){
-
-
-            strPagamento = "R$: "+edtPagamento.getText().toString();
-
-        }else{
-            strPagamento = "Pagamento: "+edtPagOutros.getText().toString();
+        }else {
+            //Toast.makeText(EditarPedido.this,"cursor Não tem dados",Toast.LENGTH_LONG).show();
         }
 
-        if ((strTitulo.isEmpty() || strDesc.isEmpty() || strPagamento.isEmpty() || bArray == null)== false){
-
-            helper.cadastrarHelp(strTitulo,strDesc,strPagamento,bArray,tipo,email);
-
-
-            Toast.makeText(CriarPedidos.this,"Cadastro Efetuado!",Toast.LENGTH_LONG).show();
-            edtTitulo.setText("");
-            edtDesc.setText("");
-            edtPagamento.setText("");
-            edtPagOutros.setText("");
-
-        }else{
-            Toast.makeText(CriarPedidos.this,"Todos os Campos Devem ser Preenchidos!",Toast.LENGTH_LONG).show();
-        }
 
     }
 
     public void tirarFoto(View view) {
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }*/
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CriarPedidos.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(EditarPedido.this);
         View mView = getLayoutInflater().inflate(R.layout.galeria_foto, null);
 
         LinearLayout lFoto = mView.findViewById(R.id.linearFoto);
@@ -184,42 +154,47 @@ public class CriarPedidos extends AppCompatActivity {
                     bArray = bos.toByteArray();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(CriarPedidos.this, "Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditarPedido.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
-    public void abrirConfiguracoes(View view) {
-        String email = parametros.getString("email_do_usuario");
-        Intent intent = new Intent(CriarPedidos.this,Configuracoes.class);
-        Bundle parametros = new Bundle();
+    public void alterarHelp(View view) {
 
-        parametros.putString("email_do_usuario",email);
+        String strTitulo = edtTitulo.getText().toString();
+        String strDesc = edtDesc.getText().toString();
+        String strPagamento;
+        Boolean  tipo = tglTipo.isChecked();
 
-        intent.putExtras(parametros);
-        startActivity(intent);
-    }
 
-    public void abrirPrincipal(View view) {
-        String email = parametros.getString("email_do_usuario");
-        Intent intent = new Intent(CriarPedidos.this, Principal.class);
-        Bundle parametros = new Bundle();
 
-        parametros.putString("email_do_usuario", email);
+        if (rdbDinheiro.isChecked()){
 
-        intent.putExtras(parametros);
-        startActivity(intent);
-    }
 
-    public void abrirMensagens(View view) {
-        String email = parametros.getString("email_do_usuario");
-        Intent intent = new Intent(CriarPedidos.this, Mensagens.class);
-        Bundle parametros = new Bundle();
+            strPagamento = "R$: "+edtPagamento.getText().toString();
 
-        parametros.putString("email_do_usuario", email);
+        }else{
+            strPagamento = "Pagamento: "+edtPagOutros.getText().toString();
+        }
 
-        intent.putExtras(parametros);
-        startActivity(intent);
+        if ((strTitulo.isEmpty() || strDesc.isEmpty() || strPagamento.isEmpty() || bArray == null)== false){
+
+            helper.alterarHelp(strTitulo,strDesc,strPagamento,bArray,tipo,idd);
+
+
+            Toast.makeText(EditarPedido.this,"Alteração Efetuada!",Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(EditarPedido.this, Configuracoes.class);
+            Bundle parametros = new Bundle();
+
+            parametros.putString("email_do_usuario", email);
+
+            intent.putExtras(parametros);
+            startActivity(intent);
+
+        }else{
+            Toast.makeText(EditarPedido.this,"Todos os Campos Devem ser Preenchidos!",Toast.LENGTH_LONG).show();
+        }
     }
 }

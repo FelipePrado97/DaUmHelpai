@@ -1,21 +1,24 @@
 package com.example.daumhelpai;
 
+import android.graphics.Bitmap;
+
 public class Model {
 
-    private int image;
-    private String title, desc;
+    private Bitmap image;
+    private String title, desc, pagamento;
 
-    public Model(int image, String title, String desc) {
+    public Model(Bitmap image, String title, String desc, String pagamento) {
         this.image = image;
         this.title = title;
         this.desc = desc;
+        this.pagamento = pagamento;
     }
 
-    public int getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
@@ -34,4 +37,7 @@ public class Model {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    public String getPagamento(){return pagamento;}
+    public void setPagamento(String pagamento){this.pagamento = pagamento; }
 }
